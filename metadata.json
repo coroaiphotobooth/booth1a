@@ -1,0 +1,7 @@
+{
+  "name": "PHOTOBOOTH DAN VIDEOBOOTH DEPLOY 1",
+  "description": "MASTER FINAL",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
