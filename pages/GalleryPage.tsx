@@ -590,6 +590,26 @@ const GalleryPage: React.FC<GalleryPageProps> = ({
          </div>
       )}
 
+      {/* QR MODAL IMPLEMENTATION (ADDED) */}
+      {showQRModal && selectedItem && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/90 backdrop-blur-md p-6 animate-[fadeIn_0.2s]" onClick={() => setShowQRModal(false)}>
+              <div className="bg-[#0a0a0a] border border-white/10 rounded-xl p-6 max-w-sm w-full flex flex-col items-center gap-6 shadow-2xl relative" onClick={e => e.stopPropagation()}>
+                  <h3 className="text-xl font-heading text-white neon-text uppercase tracking-widest">SCAN TO DOWNLOAD</h3>
+                  <div className="bg-white p-2 rounded-lg">
+                      <img 
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(getQRLink(selectedItem))}`} 
+                          alt="QR Code" 
+                          className="w-48 h-48 object-contain" 
+                      />
+                  </div>
+                  <p className="text-gray-500 text-xs font-mono text-center">Scan this QR code to download the image directly to your device.</p>
+                  <button onClick={() => setShowQRModal(false)} className="w-full py-3 bg-white/10 hover:bg-white/20 text-white font-bold uppercase tracking-widest rounded-lg transition-colors">
+                      CLOSE
+                  </button>
+              </div>
+          </div>
+      )}
+
       <style>{`
         @keyframes progress {
           0% { width: 0%; }
