@@ -366,49 +366,7 @@ const ResultPage: React.FC<ResultPageProps> = ({ capturedImage, concept: initial
                       </button>
                    )}
                 </div>
-
-                {/* FUTURISTIC QR MODAL */}
-                {showQR && sessionFolder && (
-                   <div className="absolute inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm animate-[fadeIn_0.3s]" onClick={() => setShowQR(false)}>
-                      <div className="relative bg-[#050505]/90 border border-purple-500/50 p-6 rounded-2xl flex flex-col items-center gap-4 max-w-[260px] shadow-[0_0_50px_rgba(168,85,247,0.4)] backdrop-blur-xl overflow-hidden" onClick={e => e.stopPropagation()}>
-                         {/* Animated Scan Line */}
-                         <div className="absolute top-0 left-0 w-full h-1 bg-purple-400/50 shadow-[0_0_10px_#a855f7] animate-[scan_2s_linear_infinite] z-20 pointer-events-none opacity-70" />
-                         
-                         {/* Header */}
-                         <div className="flex flex-col items-center z-10">
-                            <h3 className="text-white font-heading text-xs tracking-[0.3em] uppercase neon-text">Neural Link</h3>
-                            <div className="w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mt-2 opacity-50"/>
-                         </div>
-
-                         {/* QR Container with HUD Corners */}
-                         <div className="relative p-3 bg-white rounded-lg z-10">
-                            {/* HUD Corners */}
-                            <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-purple-500" />
-                            <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-purple-500" />
-                            <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-purple-500" />
-                            <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-purple-500" />
-                            
-                            <img src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(sessionFolder.url)}`} className="w-32 h-32 object-contain mix-blend-multiply" />
-                         </div>
-                         
-                         {/* Footer */}
-                         <div className="text-center z-10">
-                            <p className="text-purple-300 text-[8px] font-mono tracking-widest uppercase mb-1">SCAN_TO_DOWNLOAD</p>
-                            <p className="text-gray-500 text-[6px] uppercase tracking-widest">SECURE_CONNECTION_ESTABLISHED</p>
-                         </div>
-                         <button onClick={() => setShowQR(false)} className="mt-2 w-full py-2 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold uppercase text-[8px] tracking-[0.2em] rounded transition-colors z-10">Close Link</button>
-                      </div>
-                      <style>{`
-                        @keyframes scan {
-                          0% { top: 0%; opacity: 0; }
-                          10% { opacity: 1; }
-                          90% { opacity: 1; }
-                          100% { top: 100%; opacity: 0; }
-                        }
-                      `}</style>
-                   </div>
-                )}
-         </div>
+            </div>
          </div>
          
          {/* Footer / Reset */}
@@ -478,6 +436,50 @@ const ResultPage: React.FC<ResultPageProps> = ({ capturedImage, concept: initial
                  </div>
              </div>
          </div>
+      )}
+
+      {/* FUTURISTIC QR MODAL - MOVED OUTSIDE FOR BETTER Z-INDEX HANDLING */}
+      {showQR && sessionFolder && (
+          <div className="fixed inset-0 z-[80] flex items-center justify-center bg-black/80 backdrop-blur-md animate-[fadeIn_0.3s]" onClick={() => setShowQR(false)}>
+            <div className="relative bg-[#050505]/90 border border-purple-500/50 p-8 rounded-2xl flex flex-col items-center gap-4 max-w-[320px] shadow-[0_0_80px_rgba(168,85,247,0.5)] backdrop-blur-xl overflow-hidden transform scale-105" onClick={e => e.stopPropagation()}>
+                {/* Animated Scan Line */}
+                <div className="absolute top-0 left-0 w-full h-1 bg-purple-400/50 shadow-[0_0_10px_#a855f7] animate-[scan_2s_linear_infinite] z-20 pointer-events-none opacity-70" />
+                
+                {/* Header */}
+                <div className="flex flex-col items-center z-10 w-full">
+                  <h3 className="text-white font-heading text-sm tracking-[0.3em] uppercase neon-text">Neural Link</h3>
+                  <div className="w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent mt-2 opacity-50"/>
+                </div>
+
+                {/* QR Container with HUD Corners */}
+                <div className="relative p-4 bg-white rounded-xl z-10 shadow-inner mt-2">
+                  {/* HUD Corners */}
+                  <div className="absolute -top-1 -left-1 w-4 h-4 border-t-2 border-l-2 border-purple-500" />
+                  <div className="absolute -top-1 -right-1 w-4 h-4 border-t-2 border-r-2 border-purple-500" />
+                  <div className="absolute -bottom-1 -left-1 w-4 h-4 border-b-2 border-l-2 border-purple-500" />
+                  <div className="absolute -bottom-1 -right-1 w-4 h-4 border-b-2 border-r-2 border-purple-500" />
+                  
+                  <img src={`https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(sessionFolder.url)}`} className="w-40 h-40 object-contain mix-blend-multiply" />
+                </div>
+                
+                {/* Footer */}
+                <div className="text-center z-10 mt-2">
+                  <p className="text-purple-300 text-[10px] font-mono tracking-widest uppercase mb-1">SCAN_TO_DOWNLOAD</p>
+                  <p className="text-gray-500 text-[8px] uppercase tracking-widest">SECURE_CONNECTION_ESTABLISHED</p>
+                </div>
+                <button onClick={() => setShowQR(false)} className="mt-4 w-full py-3 bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold uppercase text-[10px] tracking-[0.2em] rounded-lg transition-colors z-10">
+                  TERMINATE LINK
+                </button>
+            </div>
+            <style>{`
+              @keyframes scan {
+                0% { top: 0%; opacity: 0; }
+                10% { opacity: 1; }
+                90% { opacity: 1; }
+                100% { top: 100%; opacity: 0; }
+              }
+            `}</style>
+          </div>
       )}
 
       <style>{`
